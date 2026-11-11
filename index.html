@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบบันทึกข้อมูลรายงานการเงิน</title>
+    <!-- ใช้ฟอนต์ Prompt และ Sarabun -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&family=Sarabun:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- ตั้งค่าสีสัน (Vibrant Light Theme) --- */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* ฟ้า-ม่วง */
+            --text-heading: #0f172a; 
+            --text-label: #1e293b;   
+            --text-input: #334155;   
+            --input-bg: #f8fafc;     
+            --input-border: #e2e8f0;
+            --focus-border: #667eea;
+            --focus-shadow: rgba(102, 126, 234, 0.2);
+        }
+
+        /* --- พื้นหลังภายนอกกรอบ (Mesh Gradient สดใส) --- */
+        body { 
+            font-family: 'Sarabun', sans-serif; 
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
+            margin: 0; 
+            padding: 40px 20px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            box-sizing: border-box;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- กล่องฟอร์ม (สีขาวสะอาด) --- */
+        .form-container { 
+            background-color: #ffffff; 
+            width: 100%; 
+            max-width: 650px; 
+            padding: 40px 50px; 
+            border-radius: 24px; 
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 
+                        0 1px 3px rgba(0, 0, 0, 0.05); 
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 8px;
+            background: var(--primary-gradient);
+        }
+
+        /* --- หัวข้อ --- */
+        h1 { 
+            font-family: 'Prompt', sans-serif;
+            text-align: center; 
+            font-size: 28px; 
+            color: var(--text-heading); 
+            margin-top: 10px;
+            margin-bottom: 35px; 
+            font-weight: 600; 
+            letter-spacing: 0.5px;
+        }
+
+        /* --- กลุ่มฟิลด์ --- */
+        .form-group { 
+            margin-bottom: 20px; 
+        }
+
+        label { 
+            display: block; 
+            font-size: 15px; 
+            color: var(--text-label); 
+            margin-bottom: 8px; 
+            font-weight: 500;
+        }
+        
+        /* --- ช่องกรอกข้อมูลทุกประเภท --- */
+        input[type="text"], input[type="tel"], input[type="email"], input[type="date"], input[type="url"], select, textarea { 
+            width: 100%; 
+            padding: 14px 16px; 
+            border: 1.5px solid var(--input-border); 
+            border-radius: 10px; 
+            font-size: 15px; 
+            box-sizing: border-box; 
+            font-family: 'Sarabun', sans-serif; 
+            color: var(--text-input); 
+            font-weight: 500; 
+            transition: all 0.3s ease; 
+            background-color: var(--input-bg);
+        }
+        
+        /* ลูกศร Select */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%231e293b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px top 50%;
+            background-size: 12px auto;
+            cursor: pointer;
+        }
+
+        /* Effect เวลาคลิกในช่อง (Focus) */
+        input:focus, select:focus, textarea:focus { 
+            border-color: var(--focus-border); 
+            background-color: #ffffff;
+            outline: none; 
+            box-shadow: 0 0 0 4px var(--focus-shadow); 
+        }
+
+        /* Placeholder */
+        ::placeholder { 
+            color: #94a3b8; 
+            font-size: 14px; 
+            font-weight: 400;
+        }
+
+        textarea { 
+            resize: vertical; 
+            min-height: 100px; 
+        }
+        
+        /* --- ปุ่มบันทึก (Gradient สดใส) --- */
+        .submit-btn { 
+            width: 100%; 
+            background: var(--primary-gradient); 
+            color: white; 
+            padding: 16px; 
+            border: none; 
+            border-radius: 10px; 
+            font-size: 18px; 
+            font-family: 'Prompt', sans-serif;
+            font-weight: 500; 
+            cursor: pointer; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 10px; 
+            margin-top: 30px; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled { 
+            background: #cbd5e0; 
+            color: #718096;
+            cursor: not-allowed; 
+            transform: none;
+            box-shadow: none;
+        }
+
+        .icon-save { 
+            width: 20px; 
+            height: 20px; 
+            fill: currentColor; 
+        }
+
+        /* Responsive สำหรับมือถือ */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 30px 20px;
+            }
+            h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>ระบบบันทึกข้อมูลรายงานการเงิน</h1>
+        
+        <form id="myForm">
+            
+            <div class="form-group">
+                <label for="recorder_name">ชื่อ-นามสกุล ผู้บันทึก</label>
+                <input type="text" id="recorder_name" name="recorder_name" placeholder="ระบุชื่อ-นามสกุล..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="position">ตำแหน่ง</label>
+                <input type="text" id="position" name="position" list="position-list" placeholder="พิมพ์เพื่อค้นหาหรือเลือกตำแหน่ง..." required>
+                <datalist id="position-list">
+                    <option value="นักวิชาการตรวจสอบภายใน">
+                    <option value="นักวิชาการเงินและบัญชี">
+                    <option value="เจ้าพนักงานการเงินและบัญชี">
+                    <option value="ผู้อำนวยการกองคลัง">
+                </datalist>
+            </div>
+
+            <div class="form-group">
+                <label for="department">สังกัด</label>
+                <input type="text" id="department" name="department" list="department-list" placeholder="พิมพ์เพื่อค้นหาหรือเลือกสังกัด..." required>
+                <datalist id="department-list">
+                    <option value="สำนักงานปลัดกระทรวง">
+                    <option value="กรมการปกครอง">
+                    <option value="กรมบัญชีกลาง">
+                    <option value="สำนักงานตรวจเงินแผ่นดิน">
+                </datalist>
+            </div>
+
+            <div class="form-group">
+                <label for="record_date">วันที่บันทึกข้อมูล</label>
+                <input type="date" id="record_date" name="record_date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="agency_name">ชื่อหน่วยรับตรวจ</label>
+                <input type="text" id="agency_name" name="agency_name" placeholder="ระบุชื่อหน่วยงาน..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="type">ประเภท</label>
+                <select id="type" name="type" required>
+                    <option value="">-- กรุณาเลือก --</option>
+                    <option value="อบต.">อบต. (องค์การบริหารส่วนตำบล)</option>
+                    <option value="ทต.">ทต. (เทศบาลตำบล)</option>
+                    <option value="ทม.">ทม. (เทศบาลเมือง)</option>
+                    <option value="ทน.">ทน. (เทศบาลนคร)</option>
+                    <option value="อบจ.">อบจ. (องค์การบริหารส่วนจังหวัด)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="subdistrict">ตำบล</label>
+                <input type="text" id="subdistrict" name="subdistrict" placeholder="พิมพ์ชื่อตำบล..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="district">อำเภอ</label>
+                <input type="text" id="district" name="district" placeholder="พิมพ์ชื่ออำเภอ..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="publish_status">สถานะการเผยแพร่รายงานการเงิน (สตง.)</label>
+                <select id="publish_status" name="publish_status" required>
+                    <option value="">-- กรุณาเลือก --</option>
+                    <option value="เผยแพร่แล้ว">เผยแพร่แล้ว</option>
+                    <option value="ยังไม่เผยแพร่">ยังไม่เผยแพร่</option>
+                    <option value="อยู่ระหว่างดำเนินการ">อยู่ระหว่างดำเนินการ</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="latest_year">ปีล่าสุดที่เผยแพร่</label>
+                <input type="text" id="latest_year" name="latest_year" list="year-list" placeholder="เช่น 2568" required>
+                <datalist id="year-list">
+                    <option value="2570">
+                    <option value="2569">
+                    <option value="2568">
+                    <option value="2567">
+                </datalist>
+            </div>
+
+            <div class="form-group">
+                <label for="report_status_2569">สถานะการส่งรายงานการเงินปี 2569</label>
+                <select id="report_status_2569" name="report_status_2569" required>
+                    <option value="">-- กรุณาเลือก --</option>
+                    <option value="ส่งแล้ว">ส่งแล้ว</option>
+                    <option value="ยังไม่ส่ง">ยังไม่ส่ง</option>
+                    <option value="อยู่ระหว่างดำเนินการ">อยู่ระหว่างดำเนินการ</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="submit_date">วันที่ส่ง</label>
+                <input type="date" id="submit_date" name="submit_date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="link">ลิงก์</label>
+                <input type="url" id="link" name="link" placeholder="https://..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="latlong">พิกัด lat,long</label>
+                <input type="text" id="latlong" name="latlong" placeholder="เช่น 13.7563, 100.5018">
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <svg class="icon-save" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16L21 8V19C21 20.1046 20.1046 21 19 21Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    <path d="M17 21V13H7V21" stroke="currentColor" stroke-width="2" fill="none"/>
+                    <path d="M7 3V8H15" stroke="currentColor" stroke-width="2" fill="none"/>
+                </svg>
+                <span id="btnText">บันทึกข้อมูล</span>
+            </button>
+
+        </form>
+    </div>
+
+    <!-- --- สคริปต์สำหรับส่งข้อมูล --- -->
+    <script>
+        // ⚠️ สำคัญ: นำ URL จาก Apps Script ของคุณมาใส่ตรงนี้ (ต้องลงท้ายด้วย /exec)
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxq0Ez2-MSrrDEEGoCvxcIy42QLYIW1OnJVpTJP-hZCdiXLQ6s8iv6ApWdBWAzX2G3G_Q/exec';
+        
+        const form = document.getElementById('myForm');
+        const btn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault(); 
+            
+            btn.disabled = true;
+            btnText.textContent = 'กำลังบันทึก...';
+
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: new FormData(form) 
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === "success"){
+                    alert('บันทึกข้อมูลสำเร็จ!');
+                    form.reset(); 
+                } else {
+                    alert('เกิดข้อผิดพลาดจากเซิร์ฟเวอร์: ' + data.error);
+                }
+            })
+            .catch(error => {
+                alert('เกิดข้อผิดพลาดในการเชื่อมต่อ: ' + error.message);
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btnText.textContent = 'บันทึกข้อมูล';
+            });
+        });
+    </script>
+</body>
+</html>
