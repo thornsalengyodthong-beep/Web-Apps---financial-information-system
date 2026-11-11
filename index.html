@@ -191,14 +191,15 @@
         
         <form id="myForm">
             
+            <!-- ข้อมูลผู้บันทึก -->
             <div class="form-group">
                 <label for="recorder_name">ชื่อ-นามสกุล ผู้บันทึก</label>
-                <input type="text" id="recorder_name" name="recorder_name" placeholder="ระบุชื่อ-นามสกุล..." required>
+                <input type="text" id="recorder_name" name="recorder_name" placeholder="ระบุชื่อ-นามสกุล..."  >
             </div>
 
             <div class="form-group">
                 <label for="position">ตำแหน่ง</label>
-                <input type="text" id="position" name="position" list="position-list" placeholder="พิมพ์เพื่อค้นหาหรือเลือกตำแหน่ง..." required>
+                <input type="text" id="position" name="position" list="position-list" placeholder="พิมพ์เพื่อค้นหาหรือเลือกตำแหน่ง..."  >
                 <datalist id="position-list">
                     <option value="นักวิชาการตรวจสอบภายใน">
                     <option value="นักวิชาการเงินและบัญชี">
@@ -209,7 +210,7 @@
 
             <div class="form-group">
                 <label for="department">สังกัด</label>
-                <input type="text" id="department" name="department" list="department-list" placeholder="พิมพ์เพื่อค้นหาหรือเลือกสังกัด..." required>
+                <input type="text" id="department" name="department" list="department-list" placeholder="พิมพ์เพื่อค้นหาหรือเลือกสังกัด..."  >
                 <datalist id="department-list">
                     <option value="สำนักงานปลัดกระทรวง">
                     <option value="กรมการปกครอง">
@@ -220,17 +221,18 @@
 
             <div class="form-group">
                 <label for="record_date">วันที่บันทึกข้อมูล</label>
-                <input type="date" id="record_date" name="record_date" required>
+                <input type="date" id="record_date" name="record_date"  >
             </div>
 
+            <!-- ข้อมูลหน่วยรับตรวจ -->
             <div class="form-group">
                 <label for="agency_name">ชื่อหน่วยรับตรวจ</label>
-                <input type="text" id="agency_name" name="agency_name" placeholder="ระบุชื่อหน่วยงาน..." required>
+                <input type="text" id="agency_name" name="agency_name" placeholder="ระบุชื่อหน่วยงาน..."  >
             </div>
 
             <div class="form-group">
                 <label for="type">ประเภท</label>
-                <select id="type" name="type" required>
+                <select id="type" name="type"  >
                     <option value="">-- กรุณาเลือก --</option>
                     <option value="อบต.">อบต. (องค์การบริหารส่วนตำบล)</option>
                     <option value="ทต.">ทต. (เทศบาลตำบล)</option>
@@ -242,17 +244,17 @@
 
             <div class="form-group">
                 <label for="subdistrict">ตำบล</label>
-                <input type="text" id="subdistrict" name="subdistrict" placeholder="พิมพ์ชื่อตำบล..." required>
+                <input type="text" id="subdistrict" name="subdistrict" placeholder="พิมพ์ชื่อตำบล..."  >
             </div>
 
             <div class="form-group">
                 <label for="district">อำเภอ</label>
-                <input type="text" id="district" name="district" placeholder="พิมพ์ชื่ออำเภอ..." required>
+                <input type="text" id="district" name="district" placeholder="พิมพ์ชื่ออำเภอ..."  >
             </div>
 
             <div class="form-group">
                 <label for="publish_status">สถานะการเผยแพร่รายงานการเงิน (สตง.)</label>
-                <select id="publish_status" name="publish_status" required>
+                <select id="publish_status" name="publish_status"  >
                     <option value="">-- กรุณาเลือก --</option>
                     <option value="เผยแพร่แล้ว">เผยแพร่แล้ว</option>
                     <option value="ยังไม่เผยแพร่">ยังไม่เผยแพร่</option>
@@ -262,7 +264,7 @@
 
             <div class="form-group">
                 <label for="latest_year">ปีล่าสุดที่เผยแพร่</label>
-                <input type="text" id="latest_year" name="latest_year" list="year-list" placeholder="เช่น 2568" required>
+                <input type="text" id="latest_year" name="latest_year" list="year-list" placeholder="เช่น 2568"  >
                 <datalist id="year-list">
                     <option value="2570">
                     <option value="2569">
@@ -273,7 +275,7 @@
 
             <div class="form-group">
                 <label for="report_status_2569">สถานะการส่งรายงานการเงินปี 2569</label>
-                <select id="report_status_2569" name="report_status_2569" required>
+                <select id="report_status_2569" name="report_status_2569"  >
                     <option value="">-- กรุณาเลือก --</option>
                     <option value="ส่งแล้ว">ส่งแล้ว</option>
                     <option value="ยังไม่ส่ง">ยังไม่ส่ง</option>
@@ -283,12 +285,12 @@
 
             <div class="form-group">
                 <label for="submit_date">วันที่ส่ง</label>
-                <input type="date" id="submit_date" name="submit_date" required>
+                <input type="date" id="submit_date" name="submit_date"  >
             </div>
 
             <div class="form-group">
                 <label for="link">ลิงก์</label>
-                <input type="url" id="link" name="link" placeholder="https://..." required>
+                <input type="url" id="link" name="link" placeholder="https://..."  >
             </div>
 
             <div class="form-group">
@@ -325,20 +327,21 @@
 
             fetch(scriptURL, { 
                 method: 'POST', 
-                body: new FormData(form) 
+                body: new FormData(form),
+                mode: 'no-cors' // 🌟 ต้องเปิดใช้งานบรรทัดนี้ (ไม่มี //)
             })
-            .then(response => response.json())
-            .then(data => {
-                if(data.result === "success"){
-                    alert('บันทึกข้อมูลสำเร็จ!');
-                    form.reset(); 
-                } else {
-                    alert('เกิดข้อผิดพลาดจากเซิร์ฟเวอร์: ' + data.error);
-                }
+            .then(() => {
+                // 🌟 เมื่อใช้ no-cors จะอ่าน response ไม่ได้ ต้องแจ้งเตือนแบบเหมารวม
+                alert('ส่งข้อมูลเรียบร้อยแล้ว! (โปรดตรวจสอบใน Google Sheets)');
+                form.reset(); 
             })
             .catch(error => {
                 alert('เกิดข้อผิดพลาดในการเชื่อมต่อ: ' + error.message);
             })
+            .finally(() => {
+                btn.disabled = false;
+                btnText.textContent = 'บันทึกข้อมูล';
+            });
             .finally(() => {
                 btn.disabled = false;
                 btnText.textContent = 'บันทึกข้อมูล';
